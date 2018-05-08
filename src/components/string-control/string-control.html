@@ -1,0 +1,12 @@
+<!-- usage of item outside of list, no gesture support-->
+<ion-item>
+  <ion-label>{{label}}</ion-label>
+  <ion-input
+    type="text"
+    (change)="onChange($event)"
+    [value]="value"
+    placeholder="{{ description }}"
+    [disabled]="disabled"
+  >
+  </ion-input>
+</ion-item>

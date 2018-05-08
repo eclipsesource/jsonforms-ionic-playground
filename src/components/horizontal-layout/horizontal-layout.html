@@ -1,0 +1,11 @@
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let uischema of elements">
+      <jsonforms-dispatch
+        [uischema]="uischema"
+        [schema]="schema"
+        [path]="path"
+      ></jsonforms-dispatch>
+    </ion-col>
+  </ion-row>
+</ion-grid>

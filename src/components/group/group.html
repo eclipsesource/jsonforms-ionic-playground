@@ -1,0 +1,15 @@
+<ion-card>
+  <ion-card-header>
+    {{label}}
+  </ion-card-header>
+  <ion-card-content>
+    <div *ngFor="let uischema of stateProps.uischema.elements">
+      <jsonforms-dispatch
+        [uischema]="uischema"
+        [path]="path"
+        [schema]="schema"
+      ></jsonforms-dispatch>
+    </div>
+  </ion-card-content>
+</ion-card>
+
