@@ -17,6 +17,7 @@ import {
 import {ArrayControlRenderer, ionicArrayControlTester} from "../components/array-control/array-control";
 import {ionicMasterDetailControlTester, MasterDetailComponent} from "../components/master-detail/master-detail";
 import {GroupComponent, ionicGroupTester} from "../components/group/group";
+import {ionicLabelTester, LabelRenderer} from "../components/label/label";
 
 export const rootReducer: Reducer<JsonFormsState> = combineReducers({ jsonforms: jsonformsReducer() });
 
@@ -28,6 +29,7 @@ export const ionicRenderers: { tester: RankedTester; renderer: any }[] = [
   { tester: stringControlTester, renderer: StringControlRenderer },
   { tester: ionicArrayControlTester, renderer: ArrayControlRenderer },
   { tester: ionicMasterDetailControlTester, renderer: MasterDetailComponent },
+  { tester: ionicLabelTester, renderer: LabelRenderer },
 ];
 
 export const initialState: any = {

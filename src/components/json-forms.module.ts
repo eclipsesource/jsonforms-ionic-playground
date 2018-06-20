@@ -15,6 +15,8 @@ import { ItemPage } from "./master-detail/pages/item/item";
 import { JsonFormsDispatch } from "./jsonforms-dispatch/jsonforms-dispatch";
 import { UnknownRenderer } from "./unknown/unknown";
 import {GroupComponent} from "./group/group";
+import {RootPage} from "./array-control/RootPage";
+import {LabelRenderer} from "./label/label";
 
 @NgModule({
 	declarations: [
@@ -23,6 +25,7 @@ import {GroupComponent} from "./group/group";
     CategoryRenderer,
     CategorizationRenderer,
     StringControlRenderer,
+    LabelRenderer,
 
     GroupComponent,
     IonicVerticalLayoutRenderer,
@@ -34,6 +37,8 @@ import {GroupComponent} from "./group/group";
     ItemsPage,
     ItemPage,
 
+    // array
+    RootPage,
 
     JsonFormsDispatch,
     UnknownRenderer
@@ -58,6 +63,7 @@ import {GroupComponent} from "./group/group";
     IonicVerticalLayoutRenderer,
     IonicHorizontalLayoutRenderer,
     GroupComponent,
+    LabelRenderer,
 
     // Master Detail components
     MasterDetailComponent,
@@ -65,6 +71,9 @@ import {GroupComponent} from "./group/group";
     ItemsPage,
     ItemPage,
 
+    RootPage,
+
+    // JsonFormsDispatch,
     UnknownRenderer
   ],
   providers: [

@@ -1,24 +1,26 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import * as _ from 'lodash';
 import {
   computeLabel,
   ControlElement,
   formatErrorMessage,
-  isPlainLabel,
   isArrayObjectControl,
+  isPlainLabel,
   JsonFormsState,
   rankWith,
   resolveSchema,
   toDataPath,
   UISchemaElement
 } from '@jsonforms/core';
-import { JsonFormsBaseRenderer } from '@jsonforms/angular';
-import {connectControlToJsonForms} from "../common";
+import {JsonFormsBaseRenderer} from '@jsonforms/angular';
+
 import {NgRedux} from "@angular-redux/store";
 import {Subscription} from "rxjs/Subscription";
-import * as _ from 'lodash';
 
-import {NavController} from "ionic-angular";
-import {JsonFormsDispatch} from "../jsonforms-dispatch/jsonforms-dispatch";
+
+import {Nav} from "ionic-angular";
+import {RootPage} from "./RootPage";
+import {connectControlToJsonForms} from "../common";
 
 /**
  * Generated class for the ArrayControlComponent component.
@@ -30,19 +32,16 @@ import {JsonFormsDispatch} from "../jsonforms-dispatch/jsonforms-dispatch";
   selector: 'array-control',
   templateUrl: 'array-control.html'
 })
-export class ArrayControlRenderer extends JsonFormsBaseRenderer implements OnInit {
+export class ArrayControlRenderer extends JsonFormsBaseRenderer implements OnInit, AfterViewInit {
 
-  private value: any[];
-  private disabled: boolean;
-  private errors: string;
-  private label: string;
-  private onChange;
+  @ViewChild('nav') nav: Nav;
+
   private subscription: Subscription;
-  private description;
-
   private listItems: any[];
+  private onChange;
+  private resolvedSchema;
 
-  constructor(private nav: NavController, private ngRedux: NgRedux<JsonFormsState>) {
+  constructor(private ngRedux: NgRedux<JsonFormsState>) {
     super();
   }
 
@@ -51,35 +50,40 @@ export class ArrayControlRenderer extends JsonFormsBaseRenderer implements OnIni
     this.subscription = state$.subscribe(state => {
       this.onChange = ev => state.handleChange(state.path, ev.target.value);
 
-      this.label = computeLabel(
-        isPlainLabel(state.label) ? state.label : state.label.default, state.required);
+      // this.label = computeLabel(
+      //   isPlainLabel(state.label) ? state.label : state.label.default, state.required);
 
       const isValid = state.errors.length === 0;
       if (!isValid) {
         // this.textInput.errorState = true;
       }
 
-      this.errors = formatErrorMessage(state.errors);
-      this.value = state.data;
-      this.disabled = !state.enabled;
+      // this.errors = formatErrorMessage(state.errors);
+      // this.value = state.data;
+      // this.disabled = !state.enabled;
 
+      // this.schema = state.schema;
       const controlElement = state.uischema as ControlElement;
-      // const resolvedSchema =
-      //   resolveSchema(state.schema, controlElement.scope);
+      this.resolvedSchema = resolveSchema(state.schema, controlElement.scope);
+      // console.log('resolved schema', this.resolvedSchema);
       // this.description = resolvedSchema.description === undefined ?
       //   '' : resolvedSchema.description;
-      const instancePath = toDataPath((state.uischema as UISchemaElement).options.labelRef);
-      this.listItems = state.data.map(d => ({
-        label: _.get(d, instancePath),
+      const labelPath = toDataPath((state.uischema as UISchemaElement).options.labelRef);
+      const instancePath = toDataPath((state.uischema as ControlElement).scope);
+      this.listItems = state.data.map((d, index) => ({
+        label: _.get(d, labelPath),
+        path: `${instancePath}.${index}`,
         data: d
       }));
-      console.log(this.listItems)
     });
   }
 
-  openDetails(uischema) {
-    this.nav.push(JsonFormsDispatch, { uischema });
+  ngAfterViewInit() {
+    this.nav.push(RootPage, {
+      listItems: this.listItems,
+      schema: this.resolvedSchema
+    })
   }
 }
 
-export const ionicArrayControlTester = rankWith(2, isArrayObjectControl);
+export const ionicArrayControlTester = rankWith(4, isArrayObjectControl);
