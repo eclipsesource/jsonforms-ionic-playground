@@ -1,15 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {
-  computeLabel,
-  isDateControl,
-  isPlainLabel,
-  formatErrorMessage,
-  JsonFormsState,
-  rankWith
-} from '@jsonforms/core';
-import { JsonFormsBaseRenderer } from '@jsonforms/angular';
+import {Component} from '@angular/core';
+import {isDateControl, JsonFormsState, rankWith} from '@jsonforms/core';
 import {NgRedux} from "@angular-redux/store";
-import {connectControlToJsonForms} from "../common";
+import {JsonFormsIonicControl} from "../JsonFormsIonicControl";
 
 /**
  * Generated class for the DateComponent component.
@@ -21,50 +13,11 @@ import {connectControlToJsonForms} from "../common";
   selector: 'date',
   templateUrl: 'date.html'
 })
-export class DateComponent extends JsonFormsBaseRenderer implements OnInit, OnDestroy {
+export class DateComponent extends JsonFormsIonicControl {
 
-  // TODO: common control class?
-  private subscription;
-  private onChange;
-  private path;
-  private label;
-  private errors;
-  private value;
-  private disabled;
-
-  constructor(private ngRedux: NgRedux<JsonFormsState>) {
-    super();
+  constructor(ngRedux: NgRedux<JsonFormsState>) {
+    super(ngRedux);
   }
-
-  ngOnInit() {
-    const ownProps = {
-      ...this.getOwnProps(),
-      path: this.path
-    };
-    const state$ = connectControlToJsonForms(this.ngRedux, ownProps);
-    this.subscription = state$.subscribe(state => {
-      this.onChange = ev => state.handleChange(state.path, ev.target.value);
-
-      this.label = computeLabel(
-        isPlainLabel(state.label) ? state.label : state.label.default, state.required);
-
-      const isValid = state.errors.length === 0;
-      if (!isValid) {
-        // TODO
-        // this.textInput.errorState = true;
-      }
-
-      this.errors = formatErrorMessage(state.errors);
-      this.value = state.data;
-      this.disabled = !state.enabled;
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-
 }
 
 export const ionicDateControlTester = rankWith(
