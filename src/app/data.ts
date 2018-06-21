@@ -7,6 +7,7 @@ export default {
         department: 'Complaints Division'
       },
       title: '42 killer robots',
+      ordered: true,
       processId: '1890004498',
       assignee: 'Philip J. Fry',
       status: 'ordered',

@@ -19,6 +19,8 @@ import {ionicMasterDetailControlTester, MasterDetailComponent} from "../componen
 import {GroupComponent, ionicGroupTester} from "../components/group/group";
 import {ionicLabelTester, LabelRenderer} from "../components/label/label";
 import {DateComponent, ionicDateControlTester} from "../components/date/date";
+import {BooleanComponent, ionicBooleanControlTester} from "../components/boolean/boolean";
+import {EnumComponent, ionicEnumControlTester} from "../components/enum/enum";
 
 export const rootReducer: Reducer<JsonFormsState> = combineReducers({ jsonforms: jsonformsReducer() });
 
@@ -32,6 +34,8 @@ export const ionicRenderers: { tester: RankedTester; renderer: any }[] = [
   { tester: ionicMasterDetailControlTester, renderer: MasterDetailComponent },
   { tester: ionicLabelTester, renderer: LabelRenderer },
   { tester: ionicDateControlTester, renderer: DateComponent },
+  { tester: ionicBooleanControlTester, renderer: BooleanComponent },
+  { tester: ionicEnumControlTester, renderer: EnumComponent },
 ];
 
 export const initialState: any = {

@@ -15,17 +15,21 @@ import { ItemPage } from "./master-detail/pages/item/item";
 import { JsonFormsDispatch } from "./jsonforms-dispatch/jsonforms-dispatch";
 import { UnknownRenderer } from "./unknown/unknown";
 import {GroupComponent} from "./group/group";
-import {RootPage} from "./array-control/RootPage";
+import {ArrayPage} from "./array-control/array-page.component";
 import {LabelRenderer} from "./label/label";
 import {DateComponent} from "./date/date";
+import {BooleanComponent} from "./boolean/boolean";
+import {EnumComponent} from "./enum/enum";
 
 @NgModule({
 	declarations: [
 	  ArrayControlRenderer,
+    BooleanComponent,
 	  CategorizationRenderer,
     CategoryRenderer,
     CategorizationRenderer,
     DateComponent,
+    EnumComponent,
     StringControlRenderer,
     LabelRenderer,
 
@@ -40,7 +44,7 @@ import {DateComponent} from "./date/date";
     ItemPage,
 
     // array
-    RootPage,
+    ArrayPage,
 
     JsonFormsDispatch,
     UnknownRenderer
@@ -59,9 +63,11 @@ import {DateComponent} from "./date/date";
   ],
   entryComponents: [
     ArrayControlRenderer,
+    BooleanComponent,
     CategoryRenderer,
     CategorizationRenderer,
     DateComponent,
+    EnumComponent,
     StringControlRenderer,
     IonicVerticalLayoutRenderer,
     IonicHorizontalLayoutRenderer,
@@ -74,7 +80,7 @@ import {DateComponent} from "./date/date";
     ItemsPage,
     ItemPage,
 
-    RootPage,
+    ArrayPage,
 
     // JsonFormsDispatch,
     UnknownRenderer
