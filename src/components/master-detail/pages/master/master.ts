@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { NavProxyService } from "../../NavProxyService";
-import { MasterPage } from "../MasterPage";
-import { ItemPage } from "../item/item";
+import { AbstractMasterPage } from "../AbstractMasterPage";
+import { DetailPage } from "../detail/detail";
+
 
 @IonicPage()
 @Component({
-  selector: 'page-items',
-  templateUrl: 'items.html',
+  selector: 'jsonforms-master-detail-master',
+  templateUrl: 'master.html',
 })
-export class ItemsPage extends MasterPage {
+export class MasterPage extends AbstractMasterPage {
 
   items: any[];
 
@@ -22,6 +23,6 @@ export class ItemsPage extends MasterPage {
   }
 
   onItemSelected(item) {
-    this.navProxy.pushDetail(ItemPage, { item });
+    this.navProxy.pushDetail(DetailPage, { item });
   }
 }

@@ -6,11 +6,11 @@ export default {
       label: 'Orders',
       elements: [
         {
-          type: 'Control',
+          type: 'FlatMasterDetailLayout',
           scope: '#/properties/orders',
           options: {
-            labelRef: '#/items/customer/properties/name',
-            detail: {
+            labelRef: '#/items/properties/customer/properties/name',
+            detail1: {
               type: 'VerticalLayout',
               elements: [
                 {
@@ -79,7 +79,18 @@ export default {
                               scope: '#/properties/endDate'
                             }
                           ]
-                        }
+                        },
+                        {
+                          type: 'Control',
+                          scope: '#/properties/status'
+                        },
+                        // {
+                        //   type: 'Control',
+                        //   scope: '#/properties/subOrders',
+                        //   options: {
+                        //     labelRef: '#/items/properties/customer/properties/name',
+                        //   }
+                        // }
                       ]
                     }
                   ]

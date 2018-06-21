@@ -1,0 +1,9 @@
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="onItemSelected(item)">
+      <h2>
+        {{ item.label }}
+      </h2>
+    </button>
+  </ion-list>
+</ion-content>

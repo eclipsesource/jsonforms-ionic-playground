@@ -1,21 +1,20 @@
 import * as _ from 'lodash';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   ControlElement,
   Generate,
   JsonFormsState,
-  isArrayObjectControl,
   rankWith,
   resolveSchema,
   toDataPath,
-  VerticalLayout
+  uiTypeIs,
 } from '@jsonforms/core';
 import { JsonFormsBaseRenderer } from '@jsonforms/angular';
 import {Nav} from "ionic-angular";
 import {NavProxyService} from "./NavProxyService";
-import {ItemsPage} from "./pages/items/items";
+import { MasterPage } from "./pages/master/master";
 import {PlaceholderPage} from "./pages/placeholder/placeholder";
-import {connectControlToJsonForms} from "../common";
+import {connectControlToJsonForms, removeSchemaKeywords} from "../common";
 import {NgRedux} from "@angular-redux/store";
 
 // NOTE: this implementation is based on
@@ -24,7 +23,7 @@ import {NgRedux} from "@angular-redux/store";
   selector: 'jsonforms-master-detail',
   templateUrl: 'master-detail.html'
 })
-export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnInit {
+export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnInit, OnDestroy {
 
   @ViewChild('masterNav') masterNav: Nav;
   @ViewChild('detailNav') detailNav: Nav;
@@ -33,7 +32,7 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
   detailPage: any;
 
   private subscription;
-  private listItems: any[];
+  private masterItems: any[];
 
   constructor(private navProxy: NavProxyService, private ngRedux: NgRedux<JsonFormsState>) {
     super();
@@ -47,14 +46,12 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
     this.subscription = state$.subscribe(state => {
 
       const controlElement = state.uischema as ControlElement;
-      const labelRefInstancePath = toDataPath(controlElement.options.labelRef);
+      const labelRefInstancePath = removeSchemaKeywords(controlElement.options.labelRef);
       const instancePath = toDataPath(`${controlElement.scope}/items`);
       const resolvedSchema = resolveSchema(state.schema, `${controlElement.scope}/items`);
-      const detailUISchema =
-        controlElement.options.detail
-        || (Generate.uiSchema(resolvedSchema, 'VerticalLayout') as VerticalLayout).elements;
+      const detailUISchema = controlElement.options.detail || Generate.uiSchema(resolvedSchema, 'VerticalLayout');
 
-      this.listItems = state.data.map((d, index) => {
+      this.masterItems = state.data.map((d, index) => {
         return {
           label: _.get(d, labelRefInstancePath),
           data: d,
@@ -63,17 +60,20 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
           uischema: detailUISchema
         }
       });
-       this.masterNav.setRoot(ItemsPage, {
-        detailNavCtrl: this.detailNav,
-        items: this.listItems
-      });
-      this.detailNav.setRoot(PlaceholderPage);
     });
+
+    this.masterNav.setRoot(
+      MasterPage,
+      {
+        detailNavCtrl: this.detailNav,
+        items: this.masterItems
+      }
+    );
+    this.detailNav.setRoot(PlaceholderPage);
   }
 
   onChange(event) {
     this.navProxy.onSplitPaneChanged(event._visible);
-
   }
 
   ngOnDestroy() {
@@ -82,4 +82,7 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
 }
 
 
-export const ionicMasterDetailControlTester = rankWith(3, isArrayObjectControl);
+export const ionicMasterDetailControlTester = rankWith(
+  4,
+  uiTypeIs('FlatMasterDetailLayout')
+);

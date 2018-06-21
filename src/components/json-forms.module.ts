@@ -10,8 +10,8 @@ import { ArrayControlRenderer } from "./array-control/array-control";
 import { NavProxyService } from "./master-detail/NavProxyService";
 import { MasterDetailComponent } from "./master-detail/master-detail";
 import { PlaceholderPage } from "./master-detail/pages/placeholder/placeholder";
-import { ItemsPage } from "./master-detail/pages/items/items";
-import { ItemPage } from "./master-detail/pages/item/item";
+import { MasterPage} from "./master-detail/pages/master/master";
+import { DetailPage } from "./master-detail/pages/detail/detail";
 import { JsonFormsDispatch } from "./jsonforms-dispatch/jsonforms-dispatch";
 import { UnknownRenderer } from "./unknown/unknown";
 import {GroupComponent} from "./group/group";
@@ -40,8 +40,8 @@ import {EnumComponent} from "./enum/enum";
     // Master Detail components
     MasterDetailComponent,
     PlaceholderPage,
-    ItemsPage,
-    ItemPage,
+    MasterPage,
+    DetailPage,
 
     // array
     ArrayPage,
@@ -77,8 +77,8 @@ import {EnumComponent} from "./enum/enum";
     // Master Detail components
     MasterDetailComponent,
     PlaceholderPage,
-    ItemsPage,
-    ItemPage,
+    MasterPage,
+    DetailPage,
 
     ArrayPage,
 

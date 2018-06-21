@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Nav } from 'ionic-angular';
-import { DetailPage } from "./pages/DetailPage";
+import { AbstractDetailPage } from "./pages/AbstractDetailPage";
 import { PlaceholderPage } from "./pages/placeholder/placeholder";
 
 @Injectable()
@@ -55,7 +55,7 @@ export class NavProxyService {
 
   activateSplitView() {
     const currentView = this.masterNav.getActive();
-    if (currentView !== undefined && currentView.component.prototype instanceof DetailPage) {
+    if (currentView !== undefined && currentView.component.prototype instanceof AbstractDetailPage) {
       // if the current view is a 'Detail' page, remove it from the 'master' nav stack
       // and add it to the 'detail' nav stack...
       this.masterNav.pop();
@@ -66,7 +66,7 @@ export class NavProxyService {
   deactivateSplitView() {
     const detailView = this.detailNav.getActive();
     this.detailNav.setRoot(PlaceholderPage);
-    if (detailView.component.prototype instanceof DetailPage) {
+    if (detailView.component.prototype instanceof AbstractDetailPage) {
       const index = this.masterNav.getViews().length;
       this.masterNav.insert(index, detailView.component, detailView.data);
     }
