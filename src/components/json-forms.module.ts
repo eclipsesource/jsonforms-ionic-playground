@@ -17,6 +17,7 @@ import { UnknownRenderer } from "./unknown/unknown";
 import {GroupComponent} from "./group/group";
 import {RootPage} from "./array-control/RootPage";
 import {LabelRenderer} from "./label/label";
+import {DateComponent} from "./date/date";
 
 @NgModule({
 	declarations: [
@@ -24,6 +25,7 @@ import {LabelRenderer} from "./label/label";
 	  CategorizationRenderer,
     CategoryRenderer,
     CategorizationRenderer,
+    DateComponent,
     StringControlRenderer,
     LabelRenderer,
 
@@ -59,6 +61,7 @@ import {LabelRenderer} from "./label/label";
     ArrayControlRenderer,
     CategoryRenderer,
     CategorizationRenderer,
+    DateComponent,
     StringControlRenderer,
     IonicVerticalLayoutRenderer,
     IonicHorizontalLayoutRenderer,

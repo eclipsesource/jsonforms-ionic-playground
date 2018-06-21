@@ -14,10 +14,11 @@ import {
   default as IonicHorizontalLayoutRenderer,
   ionicHorizontalLayoutTester
 } from "../components/horizontal-layout/horizontal-layout";
-import {ArrayControlRenderer, ionicArrayControlTester} from "../components/array-control/array-control";
+// import {ArrayControlRenderer, ionicArrayControlTester} from "../components/array-control/array-control";
 import {ionicMasterDetailControlTester, MasterDetailComponent} from "../components/master-detail/master-detail";
 import {GroupComponent, ionicGroupTester} from "../components/group/group";
 import {ionicLabelTester, LabelRenderer} from "../components/label/label";
+import {DateComponent, ionicDateControlTester} from "../components/date/date";
 
 export const rootReducer: Reducer<JsonFormsState> = combineReducers({ jsonforms: jsonformsReducer() });
 
@@ -27,9 +28,10 @@ export const ionicRenderers: { tester: RankedTester; renderer: any }[] = [
   { tester: ionicGroupTester, renderer: GroupComponent },
   { tester: categorizationTester, renderer: CategorizationRenderer },
   { tester: stringControlTester, renderer: StringControlRenderer },
-  { tester: ionicArrayControlTester, renderer: ArrayControlRenderer },
+  // { tester: ionicArrayControlTester, renderer: ArrayControlRenderer },
   { tester: ionicMasterDetailControlTester, renderer: MasterDetailComponent },
   { tester: ionicLabelTester, renderer: LabelRenderer },
+  { tester: ionicDateControlTester, renderer: DateComponent },
 ];
 
 export const initialState: any = {
