@@ -4,21 +4,6 @@ import {
   mapStateToLayoutProps
 } from '@jsonforms/core';
 import * as _ from 'lodash';
-
-export const connectLayoutToJsonForms = function (store, ownProps) {
-  return store.select().map(function (state) {
-    return mapStateToLayoutProps(state, ownProps);
-  });
-};
-
-export const connectControlToJsonForms = (store, ownProps: any) =>
-    store.select().map(state => {
-      const props = mapStateToControlProps(state, ownProps);
-      const dispatch = mapDispatchToControlProps(store.dispatch);
-      return {...props, ...dispatch};
-    });
-
-
 const keywords = ["#", "properties", "items"]
 
 export const removeSchemaKeywords = (path: string) => {

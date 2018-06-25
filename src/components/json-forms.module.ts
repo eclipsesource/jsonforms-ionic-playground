@@ -1,43 +1,43 @@
 import { NgModule } from '@angular/core';
-import { CategorizationRenderer } from './categorization/categorization';
-import { CategoryRenderer } from './category/category';
-import IonicVerticalLayoutRenderer from "./vertical-layout/vertical-layout";
-import { StringControlRenderer } from './string-control/string-control';
 import { IonicModule} from "ionic-angular";
 import { JsonFormsModule } from '@jsonforms/angular';
-import { IonicHorizontalLayoutRenderer } from './horizontal-layout/horizontal-layout';
-import { ArrayControlRenderer } from "./array-control/array-control";
-import { NavProxyService } from "./master-detail/NavProxyService";
-import { MasterDetailComponent } from "./master-detail/master-detail";
-import { PlaceholderPage } from "./master-detail/pages/placeholder/placeholder";
-import { MasterPage} from "./master-detail/pages/master/master";
-import { DetailPage } from "./master-detail/pages/detail/detail";
-import { JsonFormsDispatch } from "./jsonforms-dispatch/jsonforms-dispatch";
-import { UnknownRenderer } from "./unknown/unknown";
-import {GroupComponent} from "./group/group";
-import {LabelRenderer} from "./label/label";
-import {DateComponent} from "./date/date";
-import {BooleanComponent} from "./boolean/boolean";
-import {EnumComponent} from "./enum/enum";
-import {ArrayPage} from "./array-control/pages/array/array-page";
-import {ObjectPage} from "./array-control/pages/object/object-page";
-import {NumberControlRenderer} from "./number/number";
+
+import { BooleanControlRenderer } from "./controls/boolean/boolean-control";
+import { StringControlRenderer } from './controls/string/string-control';
+import { NumberControlRenderer } from "./controls/number/number-control";
+import { DateControlRenderer } from "./controls/date/date-control";
+import { EnumControlRenderer } from "./controls/enum/enum-control";
+
+import { HorizontalLayoutRenderer } from "./layouts/horizontal/horizontal-layout";
+import { VerticalLayoutRenderer } from "./layouts/vertical/vertical-layout";
+import { CategorizationLayoutRenderer } from './layouts/categorization/categorization-layout';
+import { CategoryRenderer } from './layouts/categorization/category/category';
+import { GroupLayoutRenderer } from "./layouts/group/group-layout";
+
+import { NavProxyService } from "./other/master-detail/NavProxyService";
+import { MasterDetailComponent } from "./other/master-detail/master-detail";
+import { PlaceholderPage } from "./other/master-detail/pages/placeholder/placeholder";
+import { MasterPage} from "./other/master-detail/pages/master/master";
+import { DetailPage } from "./other/master-detail/pages/detail/detail";
+import { JsonFormsDispatch } from "./other/jsonforms-dispatch/jsonforms-dispatch";
+import { UnknownRenderer } from "./other/unknown/unknown";
+import { LabelRenderer } from "./other/label/label";
 
 @NgModule({
 	declarations: [
-    BooleanComponent,
-	  CategorizationRenderer,
-    CategoryRenderer,
-    CategorizationRenderer,
-    DateComponent,
-    EnumComponent,
+    // controls
+    BooleanControlRenderer,
     StringControlRenderer,
-    LabelRenderer,
     NumberControlRenderer,
+    DateControlRenderer,
+    EnumControlRenderer,
 
-    GroupComponent,
-    IonicVerticalLayoutRenderer,
-    IonicHorizontalLayoutRenderer,
+    // layouts
+    HorizontalLayoutRenderer,
+    VerticalLayoutRenderer,
+    CategorizationLayoutRenderer,
+    CategoryRenderer,
+    GroupLayoutRenderer,
 
     // Master Detail components
     MasterDetailComponent,
@@ -45,12 +45,9 @@ import {NumberControlRenderer} from "./number/number";
     MasterPage,
     DetailPage,
 
-    // array
-    ArrayControlRenderer,
-    ArrayPage,
-    ObjectPage,
-
+    // other
     JsonFormsDispatch,
+    LabelRenderer,
     UnknownRenderer
   ],
 	imports: [
@@ -58,26 +55,33 @@ import {NumberControlRenderer} from "./number/number";
     JsonFormsModule
   ],
 	exports: [
-	  ArrayControlRenderer,
-    CategoryRenderer,
-    CategorizationRenderer,
+
+    // controls
     StringControlRenderer,
-    IonicVerticalLayoutRenderer,
-    IonicHorizontalLayoutRenderer
+    NumberControlRenderer,
+    DateControlRenderer,
+    EnumControlRenderer,
+
+    // layouts
+    HorizontalLayoutRenderer,
+    VerticalLayoutRenderer,
+    CategorizationLayoutRenderer,
+    CategoryRenderer
   ],
   entryComponents: [
-    ArrayControlRenderer,
-    BooleanComponent,
-    CategoryRenderer,
-    CategorizationRenderer,
-    DateComponent,
-    EnumComponent,
+    // controls
+    BooleanControlRenderer,
     StringControlRenderer,
-    IonicVerticalLayoutRenderer,
-    IonicHorizontalLayoutRenderer,
-    GroupComponent,
-    LabelRenderer,
     NumberControlRenderer,
+    DateControlRenderer,
+    EnumControlRenderer,
+
+    // layouts
+    HorizontalLayoutRenderer,
+    VerticalLayoutRenderer,
+    CategorizationLayoutRenderer,
+    CategoryRenderer,
+    GroupLayoutRenderer,
 
     // Master Detail components
     MasterDetailComponent,
@@ -85,10 +89,8 @@ import {NumberControlRenderer} from "./number/number";
     MasterPage,
     DetailPage,
 
-    ArrayPage,
-    ObjectPage,
-
-    // JsonFormsDispatch,
+    // other
+    LabelRenderer,
     UnknownRenderer
   ],
   providers: [
