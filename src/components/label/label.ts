@@ -1,20 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {JsonFormsState, rankWith} from '@jsonforms/core';
 import {JsonFormsBaseRenderer} from '@jsonforms/angular';
 import {connectLayoutToJsonForms} from "../common";
 import {NgRedux} from "@angular-redux/store";
 
-/**
- * Generated class for the LabelComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'label',
   templateUrl: 'label.html'
 })
-export class LabelRenderer extends JsonFormsBaseRenderer implements OnInit {
+export class LabelRenderer extends JsonFormsBaseRenderer implements OnInit, OnDestroy {
 
   label: string;
   private subscription;
@@ -24,7 +18,7 @@ export class LabelRenderer extends JsonFormsBaseRenderer implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: layout..
+    // TODO: this is using connectLayoutToJsonForms
     const state$ = connectLayoutToJsonForms(this.ngRedux, this.getOwnProps());
     this.subscription = state$.subscribe(state => {
       this.label = state.uischema.label
@@ -36,4 +30,4 @@ export class LabelRenderer extends JsonFormsBaseRenderer implements OnInit {
   }
 }
 
-export const ionicLabelTester = rankWith(4, (uischema, schema) => uischema.type === 'Label');
+export const ionicLabelTester = rankWith(4, (uischema) => uischema !== undefined && uischema.type === 'Label');

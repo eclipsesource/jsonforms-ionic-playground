@@ -13,7 +13,10 @@ export default {
         },
         title: { type: 'string' },
         ordered: { type: 'boolean' },
-        processId: { type: 'string' },
+        processId: {
+          type: 'number',
+          minimum: 0
+        },
         assignee: { type: 'string' },
         startDate: {
           type: 'string',

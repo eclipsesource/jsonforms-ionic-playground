@@ -6,11 +6,11 @@ export default {
       label: 'Orders',
       elements: [
         {
-          type: 'FlatMasterDetailLayout',
+          type: 'FlatMasterDetail',
           scope: '#/properties/orders',
           options: {
             labelRef: '#/items/properties/customer/properties/name',
-            detail1: {
+            detail: {
               type: 'VerticalLayout',
               elements: [
                 {
