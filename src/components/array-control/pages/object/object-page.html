@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{label}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item ion-item *ngFor="let prop of props" (click)="openDetails(prop)" icon-start>
+      {{prop.label}}
+    </ion-item>
+  </ion-list>
+</ion-content>
