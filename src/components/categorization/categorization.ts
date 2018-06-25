@@ -51,6 +51,14 @@ export class CategorizationRenderer extends JsonFormsBaseRenderer {
     this.nav.push(CategoryRenderer, { category: category });
     this.label = category.label;
   }
+
+  canGoBack() {
+    return this.nav.canGoBack();
+  }
+
+  goBack() {
+    return this.nav.pop();
+  }
 }
 
 export const isCategorization = (category: Category | Categorization): category is Categorization =>
@@ -65,7 +73,7 @@ export const categorizationTester: RankedTester = rankWith(
         if (_.isEmpty(categorization.elements)) {
           return false;
         }
-        // TODO: restriction is quite strict, since _all_ children of the categorization have to be categories
+        // all children of the categorization have to be categories
         return categorization.elements
           .map(elem => isCategorization(elem) ? hasCategory(elem) : elem.type === 'Category')
           .reduce((prev, curr) => prev && curr, true);
