@@ -10,14 +10,14 @@ import {
   uiTypeIs,
 } from '@jsonforms/core';
 import { JsonFormsBaseRenderer } from '@jsonforms/angular';
-import {Nav} from "ionic-angular";
+import {Nav, Platform, SplitPane} from "ionic-angular";
 import {NavProxyService} from "./NavProxyService";
 import { MasterPage } from "./pages/master/master";
 import {PlaceholderPage} from "./pages/placeholder/placeholder";
 import {connectControlToJsonForms, removeSchemaKeywords} from "../common";
 import {NgRedux} from "@angular-redux/store";
 
-// NOTE: this implementation is based on
+// NOTE: this implementation is loosely based on
 // https://medium.com/@blewpri/master-detail-with-ionic-3-split-panes-866293608d47
 @Component({
   selector: 'jsonforms-master-detail',
@@ -25,6 +25,7 @@ import {NgRedux} from "@angular-redux/store";
 })
 export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnInit, OnDestroy {
 
+  @ViewChild('pane') pane: SplitPane;
   @ViewChild('masterNav') masterNav: Nav;
   @ViewChild('detailNav') detailNav: Nav;
 
@@ -34,12 +35,18 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
   private subscription;
   private masterItems: any[];
 
-  constructor(private navProxy: NavProxyService, private ngRedux: NgRedux<JsonFormsState>) {
+  constructor(private platform: Platform, private parentNav: Nav, private navProxy: NavProxyService, private ngRedux: NgRedux<JsonFormsState>) {
     super();
   }
 
   ngOnInit() {
     this.navProxy.masterNav = this.masterNav;
+
+    if (this.parentNav && this.platform.width() < 768) {
+      // use parent nav as master, if available
+      this.navProxy.masterNav = this.parentNav;
+    }
+
     this.navProxy.detailNav = this.detailNav;
 
     const state$ = connectControlToJsonForms(this.ngRedux, this.getOwnProps());
@@ -62,7 +69,7 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
       });
     });
 
-    this.masterNav.setRoot(
+    this.navProxy.masterNav.setRoot(
       MasterPage,
       {
         detailNavCtrl: this.detailNav,
@@ -74,6 +81,12 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
 
   onChange(event) {
     this.navProxy.onSplitPaneChanged(event._visible);
+    this.navProxy.isPaneSplitted = event._visible;
+    if (this.parentNav && !this.navProxy.isPaneSplitted) {
+      this.navProxy.masterNav = this.parentNav;
+    } else {
+      this.navProxy.masterNav = this.masterNav;
+    }
   }
 
   ngOnDestroy() {
@@ -84,5 +97,5 @@ export class MasterDetailComponent extends JsonFormsBaseRenderer implements OnIn
 
 export const ionicMasterDetailControlTester = rankWith(
   4,
-  uiTypeIs('FlatMasterDetailLayout')
+  uiTypeIs('FlatMasterDetail')
 );

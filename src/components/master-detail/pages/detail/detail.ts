@@ -1,5 +1,5 @@
-import {Component, Optional} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavParams} from 'ionic-angular';
 import { AbstractDetailPage } from "../AbstractDetailPage";
 
 @IonicPage()
@@ -12,14 +12,12 @@ export class DetailPage extends AbstractDetailPage {
   schema;
   uischema;
   path: string;
-  showHeader: boolean;
 
-  constructor(@Optional() nav: NavController, public navParams: NavParams) {
+  constructor(public navParams: NavParams) {
     super();
     const item = navParams.get('item');
     this.path = item.path;
     this.schema = item.schema;
     this.uischema = item.uischema;
-    this.showHeader = nav === undefined;
   }
 }
