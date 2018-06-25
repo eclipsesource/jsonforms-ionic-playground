@@ -1,12 +1,13 @@
 <!-- usage of item outside of list, no gesture support-->
 <ion-item>
-  <ion-label>{{label}}</ion-label>
+  <ion-label floating>{{label}}</ion-label>
+  <ion-label stacked *ngIf="error" style="color: red">{{error}}</ion-label>
   <ion-input
     type="text"
     (ionChange)="onChange($event)"
     [value]="value"
     placeholder="{{ description }}"
-    [disabled]="disabled"
+    [formControl]="form"
   >
   </ion-input>
 </ion-item>

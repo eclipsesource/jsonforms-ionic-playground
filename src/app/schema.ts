@@ -11,7 +11,10 @@ export default {
             department: { type: 'string' }
           }
         },
-        title: { type: 'string' },
+        title: {
+          type: 'string',
+          minLength: 5
+        },
         ordered: { type: 'boolean' },
         processId: {
           type: 'number',

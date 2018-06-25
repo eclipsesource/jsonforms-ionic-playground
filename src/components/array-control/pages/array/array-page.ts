@@ -38,7 +38,6 @@ export class ArrayPage extends AbstractDetailPage implements OnInit {
         path
       }
     });
-    console.log('items', this.items);
   }
 
   openDetails(item) {

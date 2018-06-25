@@ -15,6 +15,7 @@ import uischema from './uischema';
 
 import {MyApp} from './app.component';
 import { JsonFormsIonicModule } from "../components/json-forms.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { JsonFormsIonicModule } from "../components/json-forms.module";
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     JsonFormsModule,
     JsonFormsIonicModule,
     IonicModule.forRoot(MyApp)
