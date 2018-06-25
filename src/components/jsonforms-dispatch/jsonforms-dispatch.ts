@@ -3,14 +3,16 @@ import {
   ComponentFactoryResolver,
   Directive,
   Input,
+  OnDestroy,
   OnInit,
   Type,
   ViewContainerRef
 } from '@angular/core';
 import {
   JsonFormsProps,
+  JsonSchema,
   mapStateToDispatchRendererProps,
-  UISchemaElement
+  UISchemaElement,
 } from '@jsonforms/core';
 import { NgRedux } from '@angular-redux/store';
 import 'rxjs/add/operator/map';
@@ -20,7 +22,7 @@ import { UnknownRenderer } from "../unknown/unknown";
 @Directive({
   selector: 'jsonforms-dispatch',
 })
-export class JsonFormsDispatch implements OnInit {
+export class JsonFormsDispatch implements OnInit, OnDestroy {
 
   @Input() path: string;
   @Input() uischema: UISchemaElement;
@@ -40,13 +42,18 @@ export class JsonFormsDispatch implements OnInit {
     );
     this.subscription = state$.subscribe(props => {
       const {renderers, schema, uischema} = props as JsonFormsProps;
-      const s = this.schema || schema;
+      const s: JsonSchema = this.schema || schema;
       const u = this.uischema || uischema;
 
       const renderer = _.maxBy(renderers, r => r.tester(u, s));
       let bestComponent: Type<any> = UnknownRenderer;
       if (renderer !== undefined && renderer.tester(u, s) !== -1) {
         bestComponent = renderer.renderer;
+      }
+      if (bestComponent === UnknownRenderer) {
+        console.warn("No renderer found for:");
+        console.warn("\tSchema", JSON.stringify(s, null, 2));
+        console.warn("\tUI Schema", JSON.stringify(u, null, 2));
       }
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(bestComponent);
       this.viewContainerRef.clear();
@@ -55,7 +62,7 @@ export class JsonFormsDispatch implements OnInit {
       if (componentRef.instance instanceof JsonFormsBaseRenderer) {
         const instance = (componentRef.instance as JsonFormsBaseRenderer);
         instance.uischema = u;
-        instance.schema = s;
+        instance.schema = s as any;
         instance['path'] = this.path;
       }
     });
