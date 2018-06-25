@@ -14,9 +14,10 @@ export class JsonFormsIonicControl extends JsonFormsBaseRenderer implements OnIn
   disabled: boolean;
   subscription: Subscription;
   resolvedSchema: JsonSchema;
+  uischema: ControlElement;
   @Input() path: string;
 
-  constructor(private ngRedux: NgRedux<JsonFormsState>) {
+  constructor(protected ngRedux: NgRedux<JsonFormsState>) {
     super();
   }
 
@@ -42,6 +43,8 @@ export class JsonFormsIonicControl extends JsonFormsBaseRenderer implements OnIn
       }
 
       const controlElement = state.uischema as ControlElement;
+      this.path = state.path;
+      this.uischema = state.uischema as ControlElement;
       this.resolvedSchema = resolveSchema(state.schema, controlElement.scope);
       this.schema = state.schema;
       this.errors = formatErrorMessage(state.errors);

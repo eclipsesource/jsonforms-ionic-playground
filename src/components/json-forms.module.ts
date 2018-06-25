@@ -15,15 +15,16 @@ import { DetailPage } from "./master-detail/pages/detail/detail";
 import { JsonFormsDispatch } from "./jsonforms-dispatch/jsonforms-dispatch";
 import { UnknownRenderer } from "./unknown/unknown";
 import {GroupComponent} from "./group/group";
-import {ArrayPage} from "./array-control/array-page.component";
 import {LabelRenderer} from "./label/label";
 import {DateComponent} from "./date/date";
 import {BooleanComponent} from "./boolean/boolean";
 import {EnumComponent} from "./enum/enum";
+import {ArrayPage} from "./array-control/pages/array/array-page";
+import {ObjectPage} from "./array-control/pages/object/object-page";
+import {NumberControlRenderer} from "./number/number";
 
 @NgModule({
 	declarations: [
-	  ArrayControlRenderer,
     BooleanComponent,
 	  CategorizationRenderer,
     CategoryRenderer,
@@ -32,6 +33,7 @@ import {EnumComponent} from "./enum/enum";
     EnumComponent,
     StringControlRenderer,
     LabelRenderer,
+    NumberControlRenderer,
 
     GroupComponent,
     IonicVerticalLayoutRenderer,
@@ -44,7 +46,9 @@ import {EnumComponent} from "./enum/enum";
     DetailPage,
 
     // array
+    ArrayControlRenderer,
     ArrayPage,
+    ObjectPage,
 
     JsonFormsDispatch,
     UnknownRenderer
@@ -73,6 +77,7 @@ import {EnumComponent} from "./enum/enum";
     IonicHorizontalLayoutRenderer,
     GroupComponent,
     LabelRenderer,
+    NumberControlRenderer,
 
     // Master Detail components
     MasterDetailComponent,
@@ -81,6 +86,7 @@ import {EnumComponent} from "./enum/enum";
     DetailPage,
 
     ArrayPage,
+    ObjectPage,
 
     // JsonFormsDispatch,
     UnknownRenderer
