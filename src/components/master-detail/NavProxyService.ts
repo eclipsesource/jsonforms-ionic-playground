@@ -8,7 +8,8 @@ export class NavProxyService {
 
   _masterNav: Nav;
   _detailNav: Nav = null;
-  _isPaneSplitted: boolean = false;
+  _isPaneSplitted: boolean;
+  _isSplitting = false;
 
   get masterNav(): Nav {
     return this._masterNav;
@@ -49,26 +50,44 @@ export class NavProxyService {
   onSplitPaneChanged(isOn) {
     this.isPaneSplitted = isOn;
     if (this.masterNav && this.detailNav) {
-      this.isPaneSplitted ? this.activateSplitView() : this.deactivateSplitView();
+      this.isPaneSplitted ? this.splitView() : this.mergeView();
     }
   }
 
-  activateSplitView() {
+  splitView() {
+    if (this._isSplitting) {
+      return;
+    }
+
+    this._isSplitting = true;
     const currentView = this.masterNav.getActive();
     if (currentView !== undefined && currentView.component.prototype instanceof AbstractDetailPage) {
       // if the current view is a 'Detail' page, remove it from the 'master' nav stack
       // and add it to the 'detail' nav stack...
-      this.masterNav.pop();
-      this.detailNav.setRoot(currentView.component, currentView.data);
+      return this.masterNav.pop()
+        .then(() => this.detailNav.setRoot(currentView.component, currentView.data))
+        .then(() => this._isSplitting = false);
     }
+    this._isSplitting = false;
   }
 
-  deactivateSplitView() {
-    const detailView = this.detailNav.getActive();
-    this.detailNav.setRoot(PlaceholderPage);
-    if (detailView.component.prototype instanceof AbstractDetailPage) {
-      const index = this.masterNav.getViews().length;
-      this.masterNav.insert(index, detailView.component, detailView.data);
+  mergeView() {
+
+    if (this._isSplitting) {
+      return;
     }
+
+    this._isSplitting = true;
+    const detailView = this.detailNav.getActive();
+    this.detailNav.setRoot(PlaceholderPage)
+      .then(
+        () => {
+          if (detailView.component.prototype instanceof AbstractDetailPage) {
+            const index = this.masterNav.getViews().length;
+            this.masterNav.insert(index, detailView.component, detailView.data);
+          }
+        }
+      )
+      .then(() => this._isSplitting = false);
   }
 }
