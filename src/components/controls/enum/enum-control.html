@@ -1,8 +1,0 @@
-<ion-item>
-  <ion-label>{{label}}</ion-label>
-  <ion-select [ngModel]="value" (ionChange)="onChange($event)">
-    <ion-option *ngFor="let option of options" value="{{option}}">
-      {{option}}
-    </ion-option>
-  </ion-select>
-</ion-item>

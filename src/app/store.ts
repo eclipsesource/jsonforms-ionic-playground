@@ -1,27 +1,26 @@
 import { combineReducers, Reducer } from 'redux';
 import {
-  RankedTester,
   jsonformsReducer,
   JsonFormsState,
 } from '@jsonforms/core';
 
-import { masterDetailTester, MasterDetailComponent} from "../components/other/master-detail/master-detail";
-import { labelTester, LabelRenderer} from "../components/other/label/label";
+import { masterDetailTester, MasterDetailComponent } from "@jsonforms/ionic-renderers";
+import { labelTester, LabelRenderer} from "@jsonforms/ionic-renderers";
 
-import { booleanControlTester, BooleanControlRenderer } from "../components/controls/boolean/boolean-control";
-import { stringControlTester, StringControlRenderer } from "../components/controls/string/string-control";
-import { numberControlTester, NumberControlRenderer } from "../components/controls/number/number-control";
-import { dateControlTester, DateControlRenderer } from "../components/controls/date/date-control";
-import { enumControlTester, EnumControlRenderer } from "../components/controls/enum/enum-control";
+import { booleanControlTester, BooleanControlRenderer } from "@jsonforms/ionic-renderers";
+import { stringControlTester, StringControlRenderer } from "@jsonforms/ionic-renderers";
+import { numberControlTester, NumberControlRenderer } from "@jsonforms/ionic-renderers";
+import { dateControlTester, DateControlRenderer } from "@jsonforms/ionic-renderers";
+import { enumControlTester, EnumControlRenderer } from "@jsonforms/ionic-renderers";
 
-import { horizontalLayoutTester, HorizontalLayoutRenderer } from "../components/layouts/horizontal/horizontal-layout";
-import { verticalLayoutTester, VerticalLayoutRenderer } from "../components/layouts/vertical/vertical-layout";
-import { categorizationTester, CategorizationLayoutRenderer } from "../components/layouts/categorization/categorization-layout";
-import { groupTester, GroupLayoutRenderer  } from "../components/layouts/group/group-layout";
+import { horizontalLayoutTester, HorizontalLayoutRenderer } from "@jsonforms/ionic-renderers";
+import { verticalLayoutTester, VerticalLayoutRenderer } from "@jsonforms/ionic-renderers";
+import { categorizationTester, CategorizationLayoutRenderer } from "@jsonforms/ionic-renderers";
+import { groupTester, GroupLayoutRenderer  } from "@jsonforms/ionic-renderers";
 
 export const rootReducer: Reducer<JsonFormsState> = combineReducers({ jsonforms: jsonformsReducer() });
 
-export const ionicRenderers: { tester: RankedTester; renderer: any }[] = [
+export const ionicRenderers: { tester: any, renderer: any }[] = [
   // controls
   { tester: booleanControlTester, renderer: BooleanControlRenderer },
   { tester: stringControlTester, renderer: StringControlRenderer },

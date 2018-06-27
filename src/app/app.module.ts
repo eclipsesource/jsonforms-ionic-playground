@@ -7,6 +7,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Actions, JsonFormsState, UISchemaElement} from '@jsonforms/core';
 import { JsonFormsModule } from '@jsonforms/angular';
+import { JsonFormsIonicModule } from '@jsonforms/ionic-renderers';
+import logger from 'redux-logger'
 
 import { initialState, rootReducer } from './store';
 import data from './data';
@@ -14,7 +16,6 @@ import schema from './schema'
 import uischema from './uischema';
 
 import {MyApp} from './app.component';
-import { JsonFormsIonicModule } from "../components/json-forms.module";
 import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
@@ -54,7 +55,7 @@ export class AppModule {
     ngRedux.configureStore(
       rootReducer,
       initialState,
-      [],
+      [logger],
       enhancers
     );
 
