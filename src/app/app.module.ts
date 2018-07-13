@@ -17,6 +17,7 @@ import uischema from './uischema';
 
 import {MyApp} from './app.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {MasterDetailNavService} from "@jsonforms/ionic-renderers";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {ReactiveFormsModule} from "@angular/forms";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    MasterDetailNavService
   ]
 })
 export class AppModule {
