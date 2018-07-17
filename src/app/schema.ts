@@ -32,16 +32,7 @@ export default {
         status: {
           type: 'string',
           enum: ['unordered', 'planned', 'ordered']
-        },
-        // subOrders: {
-        //   type: 'array',
-        //   items: {
-        //     type: 'object',
-        //     properties: {
-        //       id: { type: 'string' }
-        //     }
-        //   }
-        // }
+        }
       }
     }
   },

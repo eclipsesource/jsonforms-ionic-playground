@@ -83,14 +83,7 @@ export default {
                         {
                           type: 'Control',
                           scope: '#/properties/status'
-                        },
-                        // {
-                        //   type: 'Control',
-                        //   scope: '#/properties/subOrders',
-                        //   options: {
-                        //     labelRef: '#/items/properties/customer/properties/name',
-                        //   }
-                        // }
+                        }
                       ]
                     }
                   ]
