@@ -45,5 +45,5 @@ export default {
       }
     }
   },
-  required: ['name']
+  required: ['title']
 };
