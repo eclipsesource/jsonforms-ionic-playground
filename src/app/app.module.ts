@@ -29,7 +29,7 @@ import {JsonFormsPage} from "./JsonFormsPage";
     ReactiveFormsModule,
     JsonFormsModule,
     JsonFormsIonicModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

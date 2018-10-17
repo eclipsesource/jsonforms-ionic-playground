@@ -7,9 +7,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   template:  '<jsonforms-outlet></jsonforms-outlet>'
 })
 export class JsonFormsPage {
-
   constructor() {
-    console.log("I was constructed!")
   }
-
 }
