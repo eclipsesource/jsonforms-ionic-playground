@@ -19,3 +19,7 @@
 //@todo: Remove after Issue ionic-team/ionic#11640 is fixed
 .card-md .item-inner { border-bottom: 1px solid #dedede !important; }
 
+.scroll-content {
+  overflow-y: auto !important;
+}
+
