@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import {JsonFormsPage} from "./JsonFormsPage";
 import {IonicPageModule} from "ionic-angular";
-import {IonicSelectableModule} from "ionic-selectable";
 
 @NgModule({
   declarations: [
@@ -9,7 +8,6 @@ import {IonicSelectableModule} from "ionic-selectable";
   ],
   imports: [
     IonicPageModule.forChild(JsonFormsPage),
-    IonicSelectableModule
   ],
   entryComponents: [
     JsonFormsPage
