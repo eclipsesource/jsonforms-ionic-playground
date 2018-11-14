@@ -7,7 +7,7 @@ export default {
           type: 'object',
           properties: {
             id: { type: 'string' },
-            name: { type: 'string' },
+            name: { type: 'string', format: 'email' },
             department: { type: 'string' }
           }
         },
@@ -32,6 +32,13 @@ export default {
         status: {
           type: 'string',
           enum: ['unordered', 'planned', 'ordered']
+        },
+        amount: {
+          type: 'integer',
+          minimum: 1,
+          maximum: 100,
+          default: 10,
+          multipleOf: 1
         }
       }
     }
