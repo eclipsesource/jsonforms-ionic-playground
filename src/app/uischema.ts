@@ -6,7 +6,7 @@ export default {
       label: 'Orders',
       elements: [
         {
-          type: 'FlatMasterDetail',
+          type: 'ListWithDetail',
           scope: '#/properties/orders',
           options: {
             labelRef: '#/items/properties/customer/properties/name',
@@ -18,7 +18,10 @@ export default {
                   elements: [
                     {
                       type: 'Control',
-                      scope: '#/properties/title'
+                      scope: '#/properties/title',
+                      options: {
+                        multi: true
+                      }
                     },
                     {
                       type: 'Control',
@@ -59,7 +62,10 @@ export default {
 
                             {
                               type: 'Control',
-                              scope: '#/properties/ordered'
+                              scope: '#/properties/ordered',
+                              options: {
+                                toggle: true
+                              }
                             },
                             {
                               type: 'Control',
@@ -83,6 +89,22 @@ export default {
                         {
                           type: 'Control',
                           scope: '#/properties/status'
+                        },
+                        {
+                          type: 'Control',
+                          scope: '#/properties/amount',
+                          options: {
+                            slider: true
+                          },
+                          rule: {
+                            effect: 'DISABLE',
+                            condition: {
+                              schema: {
+                                const: 'unordered'
+                              },
+                              scope: '#/properties/status',
+                            }
+                          }
                         }
                       ]
                     }

@@ -5,9 +5,9 @@ import {DevToolsExtension, NgRedux} from '@angular-redux/store';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
-import {Actions, JsonFormsState} from '@jsonforms/core';
+import {Actions, JsonFormsState, UISchemaElement} from '@jsonforms/core';
 import {JsonFormsModule} from '@jsonforms/angular';
-import {JsonFormsIonicModule, MasterDetailNavService} from '@jsonforms/ionic-renderers';
+import {JsonFormsIonicModule} from '@jsonforms/ionic-renderers';
 import logger from 'redux-logger'
 
 import {initialState, rootReducer} from './store';
@@ -16,7 +16,6 @@ import schema from './schema'
 import uischema from './uischema';
 
 import {MyApp} from './app.component';
-import {ReactiveFormsModule} from "@angular/forms";
 import {JsonFormsPage} from "./JsonFormsPage";
 
 @NgModule({
@@ -26,7 +25,6 @@ import {JsonFormsPage} from "./JsonFormsPage";
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
     JsonFormsModule,
     JsonFormsIonicModule,
     IonicModule.forRoot(MyApp)
@@ -40,8 +38,7 @@ import {JsonFormsPage} from "./JsonFormsPage";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MasterDetailNavService
-  ]
+  ],
 })
 export class AppModule {
   constructor(
@@ -69,8 +66,29 @@ export class AppModule {
           ngRedux.dispatch(Actions.init(
             data,
             res.resolved,
-            uischema
+            uischema as UISchemaElement
           ))
       );
+
+    // uncomment to test live update
+    /*
+    setTimeout(() => {
+      console.log("pushing additional category");
+      uischema.elements.push({
+        type: "Category",
+        label: "Test",
+        elements: []
+      });
+      JsonRefs.resolveRefs(schema)
+        .then(
+          res =>
+            ngRedux.dispatch(Actions.init(
+              data,
+              res.resolved,
+              uischema as UISchemaElement
+            ))
+        )
+    }, 4000);
+    */
   }
 }

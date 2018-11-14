@@ -8,7 +8,7 @@ export default {
       },
       title: '42 killer robots',
       ordered: true,
-      processId: '1890004498',
+      processId: 144,
       assignee: 'Philip J. Fry',
       status: 'ordered',
       startDate: '2018-06-01',
@@ -23,7 +23,8 @@ export default {
       processId: '1890004499',
       assignee: 'Jen Barber',
       startDate: '2018-07-01',
-      status: 'planned'
+      status: 'planned',
+      amount: 30
     }
   ]
 };
