@@ -1,15 +1,18 @@
 import { combineReducers, Reducer } from 'redux';
 import {
+  isEnumControl,
   jsonformsReducer,
   JsonFormsState,
+  rankWith,
 } from '@jsonforms/core';
 
-import {masterDetailTester, MasterDetailComponent } from "@jsonforms/ionic-renderers";
-import { labelTester, LabelRenderer} from "@jsonforms/ionic-renderers";
+import { listWithDetailTester, ListWithDetailControl } from "@jsonforms/ionic-renderers";
+import { AutoCompleteControlRenderer } from "@jsonforms/ionic-renderers";
 
-import { booleanControlTester, BooleanControlRenderer } from "@jsonforms/ionic-renderers";
-// import { booleanToggleControlTester, BooleanToggleControlRenderer } from "@jsonforms/ionic-renderers";
-// import { multilineControlTester, MultilineControlRenderer } from "@jsonforms/ionic-renderers";
+import { booleanControlTester, BooleanCheckboxControlRenderer } from "@jsonforms/ionic-renderers";
+import { booleanToggleControlTester, BooleanToggleControlRenderer } from "@jsonforms/ionic-renderers";
+import { multilineControlTester, MultilineControlRenderer } from "@jsonforms/ionic-renderers";
+import { labelTester, LabelRenderer } from "@jsonforms/ionic-renderers";
 import { stringControlTester, StringControlRenderer } from "@jsonforms/ionic-renderers";
 import { numberControlTester, NumberControlRenderer } from "@jsonforms/ionic-renderers";
 import { dateControlTester, DateControlRenderer } from "@jsonforms/ionic-renderers";
@@ -25,14 +28,15 @@ export const rootReducer: Reducer<JsonFormsState> = combineReducers({ jsonforms:
 
 export const ionicRenderers: { tester: any, renderer: any }[] = [
   // controls
-  { tester: booleanControlTester, renderer: BooleanControlRenderer },
-  // { tester: booleanToggleControlTester, renderer: BooleanToggleControlRenderer },
+  { tester: booleanControlTester, renderer: BooleanCheckboxControlRenderer },
+  { tester: booleanToggleControlTester, renderer: BooleanToggleControlRenderer },
   { tester: stringControlTester, renderer: StringControlRenderer },
-  // { tester: multilineControlTester, renderer: MultilineControlRenderer },
+  { tester: multilineControlTester, renderer: MultilineControlRenderer },
   { tester: numberControlTester, renderer: NumberControlRenderer },
   { tester: dateControlTester, renderer: DateControlRenderer },
   { tester: enumControlTester, renderer: EnumControlRenderer },
   { tester: rangeControlTester, renderer: RangeControlRenderer },
+  { tester: rankWith(3, isEnumControl), renderer: AutoCompleteControlRenderer },
 
   // layouts
   { tester: horizontalLayoutTester, renderer: HorizontalLayoutRenderer },
@@ -41,7 +45,7 @@ export const ionicRenderers: { tester: any, renderer: any }[] = [
   { tester: groupTester, renderer: GroupLayoutRenderer },
 
   // other
-  { tester: masterDetailTester, renderer: MasterDetailComponent },
+  { tester: listWithDetailTester, renderer: ListWithDetailControl },
   { tester: labelTester, renderer: LabelRenderer },
 ];
 
