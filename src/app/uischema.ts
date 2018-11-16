@@ -14,6 +14,15 @@ export default {
               type: 'VerticalLayout',
               elements: [
                 {
+                  type: 'VerticalLayout',
+                  elements: [
+                    {
+                      type: 'Label',
+                      text: "Order"
+                    }
+                  ]
+                },
+                {
                   type: 'HorizontalLayout',
                   elements: [
                     {
