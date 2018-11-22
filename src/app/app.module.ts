@@ -8,12 +8,13 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {Actions, JsonFormsState, UISchemaElement} from '@jsonforms/core';
 import {JsonFormsModule} from '@jsonforms/angular';
 import {JsonFormsIonicModule} from '@jsonforms/ionic-renderers';
-import logger from 'redux-logger'
+import logger from 'redux-logger';
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+
 
 import {initialState, rootReducer} from './store';
 import data from './data';
 import schema from './schema'
-import uischema from './uischema';
 
 import {MyApp} from './app.component';
 import {JsonFormsPage} from "./JsonFormsPage";
@@ -27,7 +28,8 @@ import {JsonFormsPage} from "./JsonFormsPage";
     BrowserModule,
     JsonFormsModule,
     JsonFormsIonicModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +45,8 @@ import {JsonFormsPage} from "./JsonFormsPage";
 export class AppModule {
   constructor(
     ngRedux: NgRedux<JsonFormsState>,
-    devTools: DevToolsExtension
+    devTools: DevToolsExtension,
+    http: HttpClient
   ) {
     let enhancers = [];
     // ... add whatever other enhancers you want.
@@ -60,15 +63,18 @@ export class AppModule {
       enhancers
     );
 
-    JsonRefs.resolveRefs(schema)
-      .then(
-        res =>
-          ngRedux.dispatch(Actions.init(
-            data,
-            res.resolved,
-            uischema as UISchemaElement
-          ))
-      );
+    http.get("./uischema.json").forEach(uischema => {
+      JsonRefs.resolveRefs(schema)
+        .then(
+          res =>
+            ngRedux.dispatch(Actions.init(
+              data,
+              res.resolved,
+              uischema as UISchemaElement
+            ))
+        );
+    });
+
 
     // uncomment to test live update
     /*
