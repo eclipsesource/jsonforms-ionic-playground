@@ -17,11 +17,13 @@ import schema from './schema'
 
 import {MyApp} from './app.component';
 import {JsonFormsPage} from "./JsonFormsPage";
+import {CustomAutocompleteControl} from "./custom.autocomplete.control";
 
 @NgModule({
   declarations: [
     MyApp,
     JsonFormsPage,
+    CustomAutocompleteControl
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,7 @@ import {JsonFormsPage} from "./JsonFormsPage";
   entryComponents: [
     MyApp,
     JsonFormsPage,
+    CustomAutocompleteControl
   ],
   providers: [
     StatusBar,
