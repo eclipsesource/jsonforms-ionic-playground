@@ -99,6 +99,13 @@
                       "scope": "#/properties/customer/properties/emailAddress"
                     }
                   ]
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/description",
+                  "options": {
+                    "multi": true
+                  }
                 }
               ]
             }
