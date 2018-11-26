@@ -108,11 +108,18 @@
     },
     {
       "type": "Category",
-      "label": "Calendar",
+      "label": "Data",
       "elements": [
         {
           "type": "Label",
-          "text": "Currently Empty Category"
+          "text": "Data"
+        },
+        {
+          "type": "Control",
+          "scope": "#",
+          "options": {
+            "custom": true
+          }
         }
       ]
     },
