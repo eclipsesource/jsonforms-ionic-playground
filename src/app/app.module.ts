@@ -6,7 +6,6 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Actions, JsonFormsState, UISchemaElement} from '@jsonforms/core';
-import {JsonFormsModule} from '@jsonforms/angular';
 import {JsonFormsIonicModule} from '@jsonforms/ionic-renderers';
 import logger from 'redux-logger';
 import { HttpClientModule, HttpClient } from "@angular/common/http";
@@ -26,7 +25,6 @@ import {JsonFormsPage} from "./JsonFormsPage";
   ],
   imports: [
     BrowserModule,
-    JsonFormsModule,
     JsonFormsIonicModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule
