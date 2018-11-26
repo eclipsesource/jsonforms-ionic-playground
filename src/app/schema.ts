@@ -7,8 +7,9 @@ export default {
           type: 'object',
           properties: {
             id: { type: 'string' },
-            name: { type: 'string', format: 'email' },
-            department: { type: 'string' }
+            name: { type: 'string'},
+            department: { type: 'string' },
+            emailAddress: { type: 'string', format: "email" }
           }
         },
         title: {
