@@ -67,7 +67,7 @@ export class AppModule {
       enhancers
     );
 
-    http.get("./uischema.json").forEach(uischema => {
+    http.get("./assets/uischema.json").forEach(uischema => {
       JsonRefs.resolveRefs(schema)
         .then(
           res =>
