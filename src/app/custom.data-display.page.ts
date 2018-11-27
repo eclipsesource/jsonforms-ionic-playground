@@ -16,7 +16,6 @@ export class DataDisplayPage extends JsonFormsControl {
   }
 
   mapAdditionalProps(props) {
-    console.log('props', props);
     this.stringifiedData = JSON.stringify(props.data, null, 2);
   }
 }
