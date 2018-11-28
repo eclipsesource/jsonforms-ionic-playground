@@ -1,26 +1,31 @@
-import * as JsonRefs from 'json-refs';
-import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, isDevMode, NgModule} from '@angular/core';
-import {DevToolsExtension, NgRedux} from '@angular-redux/store';
-import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {StatusBar} from '@ionic-native/status-bar';
-import {Actions, JsonFormsState, UISchemaElement} from '@jsonforms/core';
-import {JsonFormsIonicModule} from '@jsonforms/ionic-renderers';
-import logger from 'redux-logger';
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import {DevToolsExtension, NgRedux} from "@angular-redux/store";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {ErrorHandler, isDevMode, NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
+import {SplashScreen} from "@ionic-native/splash-screen";
+import {StatusBar} from "@ionic-native/status-bar";
+import {Actions, JsonFormsState, UISchemaElement} from "@jsonforms/core";
+import {JsonFormsIonicModule} from "@jsonforms/ionic-renderers";
+import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
+import * as JsonRefs from "json-refs";
+import logger from "redux-logger";
 
-
-import {initialState, rootReducer} from './store';
-import data from './data';
-
-import {MyApp} from './app.component';
-import {JsonFormsPage} from "./JsonFormsPage";
+import {MyApp} from "./app.component";
 import {CustomAutocompleteControl} from "./custom.autocomplete.control";
 import {DataDisplayPage} from "./custom.data-display.page";
+import data from "./data";
+import {JsonFormsPage} from "./JsonFormsPage";
+import {initialState, rootReducer} from "./store";
 
 @NgModule({
+  bootstrap: [IonicApp],
   declarations: [
+    MyApp,
+    JsonFormsPage,
+    CustomAutocompleteControl,
+    DataDisplayPage
+  ],
+  entryComponents: [
     MyApp,
     JsonFormsPage,
     CustomAutocompleteControl,
@@ -32,13 +37,6 @@ import {DataDisplayPage} from "./custom.data-display.page";
     IonicModule.forRoot(MyApp),
     HttpClientModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    JsonFormsPage,
-    CustomAutocompleteControl,
-    DataDisplayPage
-  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -46,6 +44,7 @@ import {DataDisplayPage} from "./custom.data-display.page";
   ],
 })
 export class AppModule {
+
   constructor(
     ngRedux: NgRedux<JsonFormsState>,
     devTools: DevToolsExtension,
@@ -67,23 +66,22 @@ export class AppModule {
     );
 
     http.get("./assets/uischema.json")
-      .forEach(uischema => {
+      .forEach((uischema) => {
         http.get("./assets/schema.json")
-          .forEach(schema =>
+          .forEach((schema) =>
             JsonRefs.resolveRefs(schema)
               .then(
-                res =>
+                (res: any) =>
                   ngRedux.dispatch(
                     Actions.init(
                       data,
                       res.resolved,
-                      uischema as UISchemaElement
+                      uischema as UISchemaElement,
                     )
                   )
               )
           );
       });
-
 
     // uncomment to test live update
     /*
