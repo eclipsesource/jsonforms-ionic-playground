@@ -132,11 +132,18 @@
     },
     {
       "type": "Category",
-      "label": "Customers",
+      "label": "Language",
       "elements": [
         {
           "type": "Label",
-          "text": "Currently Empty Category"
+          "text": "Choose preferred locale"
+        },
+        {
+          "type": "Control",
+          "scope": "#",
+          "options": {
+            "lang": true
+          }
         }
       ]
     },

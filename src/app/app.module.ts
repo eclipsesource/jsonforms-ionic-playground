@@ -4,7 +4,7 @@ import {ErrorHandler, isDevMode, NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
-import {Actions, JsonFormsState, UISchemaElement} from "@jsonforms/core";
+import {Actions, JsonFormsState, setLocale, UISchemaElement} from "@jsonforms/core";
 import {JsonFormsIonicModule} from "@jsonforms/ionic-renderers";
 import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 import * as JsonRefs from "json-refs";
@@ -16,6 +16,7 @@ import {DataDisplayPage} from "./custom.data-display.page";
 import data from "./data";
 import {JsonFormsPage} from "./JsonFormsPage";
 import {initialState, rootReducer} from "./store";
+import {LangPage} from "./lang.page";
 
 @NgModule({
   bootstrap: [IonicApp],
@@ -23,13 +24,15 @@ import {initialState, rootReducer} from "./store";
     MyApp,
     JsonFormsPage,
     CustomAutocompleteControl,
-    DataDisplayPage
+    DataDisplayPage,
+    LangPage
   ],
   entryComponents: [
     MyApp,
     JsonFormsPage,
     CustomAutocompleteControl,
-    DataDisplayPage
+    DataDisplayPage,
+    LangPage
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,8 @@ export class AppModule {
       [logger],
       enhancers
     );
+
+    ngRedux.dispatch(setLocale('de-DE'));
 
     http.get("./assets/uischema.json")
       .forEach((uischema) => {
