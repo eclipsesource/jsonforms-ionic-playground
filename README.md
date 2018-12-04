@@ -20,10 +20,8 @@ If you want to make use of the ionic-renderers in your own project, please follo
 ```ts
    import { combineReducers, Reducer } from 'redux';
    import {
-     isEnumControl,
      jsonformsReducer,
-     JsonFormsState,
-     rankWith,
+     JsonFormsState
    } from '@jsonforms/core';
    import {ionicRenderers} from "@jsonforms/ionic-renderers";
    
