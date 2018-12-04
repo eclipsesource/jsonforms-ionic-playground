@@ -14,6 +14,7 @@ import {combineReducers, Reducer} from "redux";
 
 import {CustomAutocompleteControl} from "./custom.autocomplete.control";
 import {DataDisplayPage} from "./custom.data-display.page";
+import {LangPage} from "./lang.page";
 
 export const rootReducer: Reducer<JsonFormsState> = combineReducers({ jsonforms: jsonformsReducer() });
 
@@ -35,6 +36,16 @@ export const initialState: any = {
           and(
             isControl,
             optionIs("custom", true)
+          )
+        )
+      },
+      {
+        renderer: LangPage,
+        tester: rankWith(
+          6,
+          and(
+            isControl,
+            optionIs("lang", true)
           )
         )
       },
