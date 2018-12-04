@@ -35,7 +35,7 @@ export const initialState: any = {
           6,
           and(
             isControl,
-            optionIs("custom", true)
+            scopeEndsWith("___data")
           )
         )
       },

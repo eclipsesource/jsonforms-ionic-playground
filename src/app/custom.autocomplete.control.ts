@@ -16,7 +16,7 @@ const fetchSuggestions = (input: string): Promise<string[]> => {
 @Component({
   selector: "jsonforms-custom-autocomplete-control",
   template: `
-    <ion-item>
+    <ion-item no-lines no-padding>
       <ion-label floating>{{label}}</ion-label>
       <ion-label stacked *ngIf="error" color="error">{{error}}</ion-label>
       <ionic-selectable
