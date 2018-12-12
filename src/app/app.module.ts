@@ -8,16 +8,16 @@ import {Actions, JsonFormsState, setLocale, UISchemaElement} from "@jsonforms/co
 import {JsonFormsIonicModule} from "@jsonforms/ionic-renderers";
 import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 import * as JsonRefs from "json-refs";
-import {forkJoin} from "rxjs/observable/forkJoin";
 import logger from "redux-logger";
+import {forkJoin} from "rxjs/observable/forkJoin";
 
 import {MyApp} from "./app.component";
 import {CustomAutocompleteControl} from "./custom.autocomplete.control";
 import {DataDisplayPage} from "./custom.data-display.page";
 import data from "./data";
 import {JsonFormsPage} from "./JsonFormsPage";
-import {initialState, rootReducer} from "./store";
 import {LangPage} from "./lang.page";
+import {initialState, rootReducer} from "./store";
 
 @NgModule({
   bootstrap: [IonicApp],
@@ -69,7 +69,7 @@ export class AppModule {
       enhancers
     );
 
-    ngRedux.dispatch(setLocale('de-DE'));
+    ngRedux.dispatch(setLocale("de-DE"));
 
     forkJoin(
       http.get("./assets/uischema.json"),
