@@ -14,13 +14,13 @@ import {getLocale, JsonFormsState, setLocale} from "@jsonforms/core";
 })
 export class LangPage extends JsonFormsControl {
 
-  currentLocale: string;
+  private currentLocale: string;
 
   constructor(protected ngRedux: NgRedux<JsonFormsState>) {
     super(ngRedux);
   }
 
-  mapAdditionalProps() {
+  public mapAdditionalProps() {
     this.currentLocale = getLocale(this.ngRedux.getState());
   }
 
