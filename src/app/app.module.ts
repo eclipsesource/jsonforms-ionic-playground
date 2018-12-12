@@ -8,6 +8,7 @@ import {Actions, JsonFormsState, setLocale, UISchemaElement} from "@jsonforms/co
 import {JsonFormsIonicModule} from "@jsonforms/ionic-renderers";
 import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 import * as JsonRefs from "json-refs";
+import {forkJoin} from "rxjs/observable/forkJoin";
 import logger from "redux-logger";
 
 import {MyApp} from "./app.component";
@@ -70,23 +71,22 @@ export class AppModule {
 
     ngRedux.dispatch(setLocale('de-DE'));
 
-    http.get("./assets/uischema.json")
-      .forEach((uischema) => {
-        http.get("./assets/schema.json")
-          .forEach((schema) =>
-            JsonRefs.resolveRefs(schema)
-              .then(
-                (res: any) =>
-                  ngRedux.dispatch(
-                    Actions.init(
-                      data,
-                      res.resolved,
-                      uischema as UISchemaElement,
-                    )
-                  )
+    forkJoin(
+      http.get("./assets/uischema.json"),
+      http.get("./assets/schema.json")
+    ).subscribe(([uischema, schema]) => {
+      JsonRefs.resolveRefs(schema)
+        .then(
+          (res: any) =>
+            ngRedux.dispatch(
+              Actions.init(
+                data,
+                res.resolved,
+                uischema as UISchemaElement,
               )
-          );
-      });
+            )
+        );
+    });
 
     // uncomment to test live update
     /*
