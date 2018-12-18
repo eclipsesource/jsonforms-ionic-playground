@@ -8,6 +8,7 @@ import {Actions, JsonFormsState, setLocale, UISchemaElement} from "@jsonforms/co
 import {JsonFormsIonicModule} from "@jsonforms/ionic-renderers";
 import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 import * as JsonRefs from "json-refs";
+import * as _ from "lodash";
 import logger from "redux-logger";
 import {forkJoin} from "rxjs/observable/forkJoin";
 
@@ -17,6 +18,7 @@ import {DataDisplayPage} from "./custom.data-display.page";
 import data from "./data";
 import {JsonFormsPage} from "./JsonFormsPage";
 import {LangPage} from "./lang.page";
+import {LangService} from "./lang.service";
 import {initialState, rootReducer} from "./store";
 
 @NgModule({
@@ -42,6 +44,7 @@ import {initialState, rootReducer} from "./store";
     HttpClientModule
   ],
   providers: [
+    LangService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -52,7 +55,8 @@ export class AppModule {
   constructor(
     ngRedux: NgRedux<JsonFormsState>,
     devTools: DevToolsExtension,
-    http: HttpClient
+    http: HttpClient,
+    langService: LangService
   ) {
     let enhancers = [];
     // ... add whatever other enhancers you want.
@@ -69,7 +73,7 @@ export class AppModule {
       enhancers
     );
 
-    ngRedux.dispatch(setLocale("de-DE"));
+    ngRedux.dispatch(setLocale("en-US"));
 
     forkJoin(
       http.get("./assets/uischema.json"),
@@ -77,14 +81,26 @@ export class AppModule {
     ).subscribe(([uischema, schema]) => {
       JsonRefs.resolveRefs(schema)
         .then(
-          (res: any) =>
+          (res: any) => {
+            const resolvedSchema = res.resolved;
+            const deSchema = _.cloneDeep(resolvedSchema);
+            _.set(deSchema, "definitions.order.properties.customer.properties.department.description", "Abteilung");
+            langService.setSchema("de-DE", deSchema);
+            langService.setSchema("en-US", resolvedSchema);
+
+            const deUISchema = _.cloneDeep(uischema);
+            _.set(deUISchema, "elements.0.elements.0.options.detail.elements.0.elements.0.label", "Titel");
+            langService.setUISchema("de-DE", deUISchema);
+            langService.setUISchema("en-US", uischema as UISchemaElement);
+
             ngRedux.dispatch(
               Actions.init(
                 data,
                 res.resolved,
                 uischema as UISchemaElement,
               )
-            )
+            );
+          }
         );
     });
 
