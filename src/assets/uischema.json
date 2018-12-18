@@ -18,6 +18,7 @@
                   "elements": [
                     {
                       "type": "Control",
+                      "label": "Title",
                       "scope": "#/properties/title"
                     },
                     {
