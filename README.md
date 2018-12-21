@@ -121,7 +121,7 @@ is available via `@angular/common/http`)
  rootPage: any = JsonFormsPage;
  ```
  
-10. Finally, start the application via `ionic serve` (if prompted to update to 4.x, neglect by entering `"n"`).
+10. Finally, start the application via `ionic serve` (if prompted to update to 4.x, ignore by entering `"n"`).
 
 
 # Covered Features
