@@ -111,6 +111,7 @@ is available via `@angular/common/http`)
  ```
  You'll also need to add the `JsonFormsPage` toe `declarations` property
  of the `AppModule`.
+ 
 9. In `app.component.ts`, first import `JsonFormsPage`
  ```ts
  import { JsonFormsPage } from ""./jsonforms.page";
@@ -119,6 +120,7 @@ is available via `@angular/common/http`)
  ```ts
  rootPage: any = JsonFormsPage;
  ```
+ 
 10. Finally, start the application via `ionic serve` (if prompted to update to 4.x, neglect by entering `"n"`).
 
 
