@@ -10,24 +10,32 @@
    
 # General usage
 
-If you want to make use of the ionic-renderers in your own project, please follow these guidelines:
+If you want to make use of the ionic-renderers in your own project, please follow these guidelines. We'll use a new project in the following:
 
-1. Install dependencies
-   * `npm i @jsonforms/core`
-   * `npm i @jsonforms/angular`
-   * `npm i @jsonforms/ionic-renderers`
-2. Import `JsonFormsIonicModule` and add it to the `imports` section
-3. Create a store configuration, e.g. in a file called `store.ts` and add the following contents
-```ts
+1. Create a new project e.g. `ionic start todo blank`. 
+2. Install dependencies:
+```
+npm i @jsonforms/core
+npm i @jsonforms/angular
+npm i @jsonforms/ionic-renderers
+```
+3. Open `src/app/app.module.ts`
+
+   * Import `JsonFormsIonicModule` from `@jsonforms/ionic-renderer`
+   * Add `JsonFormsIonicModule` to the `imports` section
+
+As we'll fetch example via HTTP, repeat the steps for `HttpClientModule` (which
+is available via `@angular/common/http`)
+
+4. Create a `src/app/store.ts` with the following content:
+   ```ts
    import { combineReducers, Reducer } from 'redux';
    import {
      jsonformsReducer,
      JsonFormsState
    } from '@jsonforms/core';
    import {ionicRenderers} from "@jsonforms/ionic-renderers";
-   
    export const rootReducer: Reducer<JsonFormsState> = combineReducers({ jsonforms: jsonformsReducer() });
-   
    export const initialState: any = {
      jsonforms: {
        renderers: ionicRenderers,
@@ -35,24 +43,84 @@ If you want to make use of the ionic-renderers in your own project, please follo
      }
    };
    ```
-4. Initialize the store via ngRedux (e.g. within `ngOnInit` of your app module)
-   ```ts
-    import {Actions} from '@jsonforms/core';
-    import {initialState, rootReducer} from './store';
    
-    ngRedux.configureStore(
-      rootReducer,
-      initialState
-    );
-    
-    ngRedux.dispatch(
-      Actions.init(
-        data,
-        schema
-        uischema
-      )
-    );
+5. Copy your JSON schema and UI schema JSON files to the `src/assets` folder.
+   We'll refer to these files as `schema.json` and `ui-schema.json`, respectively.
+   In a real-world scenario these schemas might be fetched from somewhere else of course.
+   If you don't have any schemas at hand you can use 
+   [these ones](https://github.com/eclipsesource/jsonforms-ionic-playground/tree/master/src/assets).
+
+6. This step is optional, but if you want to initialize the rendered froms
+   with pre-defined data, you'll need to declare/import it, such that we are 
+   able to pass it to the store. If you are using the provided example JSON
+   and UI schema, you may also make use of the example data provided
+   [here](https://github.com/eclipsesource/jsonforms-ionic-playground/blob/master/src/app/data.ts),
+
+7. Within the `src/app/app.module.ts` we'll now import the JSON schema and the 
+   UI schema and initialize the store. First, let's make the necessary imports
+
+   ```ts
+   import { NgRedux } from "@angular-redux/store";
+   import { HttpClient, HttpClientModule } from "@angular/common/http";
+   import { Actions, JsonFormsState, UISchemaElement } from "@jsonforms/core";
+   import { forkJoin } from "rxjs/observable/forkJoin";
+   import { rootReducer, initialState } from "./store";
+   import data from "./data"; // our example data
    ```
+   
+   Next, let's add a constructor:
+   ```ts
+   constructor(
+     ngRedux: NgRedux<JsonFormsState>,
+     http: HttpClient
+   ) {
+    // TODO  
+   })
+   ```
+
+   Within the constructor of `AppModule`, let's setup the store:
+   
+   ```ts
+   ngRedux.configureStore(rootReducer, initialState);
+   ```
+   
+   Finally, grab the JSON and UI schema  and initialize our store:
+   ```ts
+   forkJoin(
+     http.get("./assets/schema.json"),
+     http.get("./assets/uischema.json")
+   ).subscribe(([schema, uischema]) => {
+     ngRedux.dispatch(
+       Actions.init(
+         data,
+         schema,
+         uischema as UISchemaElement,
+       )
+     );  
+   });
+   ```
+8. Create a custom `JsonFormsPage` component in `src/app/jsonforms.page.ts` 
+   which will replace the default `HomePage` in `app.components.ts`
+ ```ts
+ import {Component} from "@angular/core";
+ @Component({
+   selector: "jsonforms-page",
+   template:  "<jsonforms-outlet></jsonforms-outlet>"
+ })
+ export class JsonFormsPage { }
+ ```
+ You'll also need to add the `JsonFormsPage` toe `declarations` property
+ of the `AppModule`.
+9. In `app.component.ts`, first import `JsonFormsPage`
+ ```ts
+ import { JsonFormsPage } from ""./jsonforms.page";
+ ```
+ Then change the assignment of `HomePage` to `JsonFormsPage`
+ ```ts
+ rootPage: any = JsonFormsPage;
+ ```
+10. Finally, start the application via `ionic serve` (if prompted to update to 4.x, neglect by entering `"n"`).
+
 
 # Covered Features
 
